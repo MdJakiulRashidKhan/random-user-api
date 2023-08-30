@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User</title>
+    <style>
+        .user-info{
+            background-color: aqua;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Random User</h1>
+    </header>
+    <section>
+        <h3>User</h3>
+        <div id="divContainer"></div>
+    </section>
+    <script>
+        const loadUsers = ()=>{
+            fetch('https://randomuser.me/api/?results=10')
+            .then(res =>res.json())
+            .then(data =>displayUsers(data.results))
+        }
+        const displayUsers =(data)=>{
+            const divContainer = document.getElementById('divContainer');
+            for(const user of data)
+            {
+                console.log(user);
+                const userDiv = document.createElement('div');
+                userDiv.classList.add('user-info');
+                userDiv.innerHTML =
+                `
+                <h3>User Name :${user.name.first}</h3>
+                <p>User Info :${user.email}</p>
+                <p>Location: ${user.location.city}, ${user.location.country}</p>`;
+                divContainer.appendChild(userDiv);
+            }
+           
+        }
+        loadUsers();
+    </script>
+</body>
+</html>
